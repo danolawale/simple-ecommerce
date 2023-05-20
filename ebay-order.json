@@ -1,0 +1,179 @@
+{
+  "orderId": "187727",
+  "legacyOrderId": "254333",
+  "creationDate": "2020-05-12T07:58:13.000Z",
+  "lastModifiedDate": "2020-05-14T22:25:26.000Z",
+  "orderFulfillmentStatus": "NOT_STARTED",
+  "orderPaymentStatus": "PAID",
+  "sellerId": "k********1",
+  "buyer": {
+    "username": "m********r",
+    "taxAddress": {
+      "city": "S********e",
+      "stateOrProvince": "**",
+      "postalCode": "9***",
+      "countryCode": "US"
+    },
+    "buyerRegistrationAddress": {
+      "fullName": "q**** b****",
+      "contactAddress": {
+        "addressLine1": "2*** H******* A**.",
+        "city": "S******e",
+        "stateOrProvince": "CA",
+        "postalCode": "9****",
+        "countryCode": "US"
+      },
+      "primaryPhone": {
+        "phoneNumber": ""
+      },
+      "email": "test.customer@9xb-test.com"
+    }
+  },
+  "pricingSummary": {
+    "priceSubtotal": {
+      "value": "263.0",
+      "currency": "USD"
+    },
+    "deliveryCost": {
+      "value": "1.0",
+      "currency": "USD"
+    },
+    "tax": {
+      "value": "24.33",
+      "currency": "USD"
+    },
+    "fee": {
+      "value": "6.0",
+      "currency": "USD"
+    },
+    "total": {
+      "value": "294.33",
+      "currency": "USD"
+    }
+  },
+  "cancelStatus": {
+    "cancelState": "NONE_REQUESTED",
+    "cancelRequests": []
+  },
+  "paymentSummary": {
+    "totalDueSeller": {
+      "value": "294.33",
+      "currency": "USD"
+    },
+    "refunds": [],
+    "payments": [
+      {
+        "paymentMethod": "EBAY",
+        "paymentReferenceId": "2********L",
+        "paymentDate": "2020-05-12T07:58:15.000Z",
+        "amount": {
+          "value": "294.33",
+          "currency": "USD"
+        },
+        "paymentStatus": "PAID"
+      }
+    ]
+  },
+  "fulfillmentStartInstructions": [
+    {
+      "fulfillmentInstructionsType": "SHIP_TO",
+      "minEstimatedDeliveryDate": "2020-05-20T07:00:00.000Z",
+      "maxEstimatedDeliveryDate": "2020-05-20T07:00:00.000Z",
+      "ebaySupportedFulfillment": false,
+      "shippingStep": {
+        "shipTo": {
+          "fullName": "M********t",
+          "contactAddress": {
+            "addressLine1": "2********e",
+            "city": "S********e",
+            "stateOrProvince": "**",
+            "postalCode": "9****5",
+            "countryCode": "US"
+          },
+          "primaryPhone": {
+            "phoneNumber": "4********0"
+          },
+          "email": "*******************6@m**************.com"
+        },
+        "shippingServiceCode": "ShippingMethodExpress"
+      }
+    }
+  ],
+  "fulfillmentHrefs": [],
+  "lineItems": [
+    {
+      "lineItemId": "6********5",
+      "legacyItemId": "2********4",
+      "title": "New! Vizio 43” Class D Series 4K - Electronic Fee Item- VP in CUB QA",
+      "lineItemCost": {
+        "value": "263.0",
+        "currency": "USD"
+      },
+      "quantity": 1,
+      "soldFormat": "FIXED_PRICE",
+      "listingMarketplaceId": "EBAY_US",
+      "purchaseMarketplaceId": "EBAY_US",
+      "lineItemFulfillmentStatus": "NOT_STARTED",
+      "total": {
+        "value": "294.33",
+        "currency": "USD"
+      },
+      "deliveryCost": {
+        "shippingCost": {
+          "value": "1.0",
+          "currency": "USD"
+        }
+      },
+      "appliedPromotions": [],
+      "taxes": [
+        {
+          "amount": {
+            "value": "6.0",
+            "currency": "USD"
+          },
+          "taxType": "ELECTRONIC_RECYCLING_FEE"
+        },
+        {
+          "amount": {
+            "value": "24.33",
+            "currency": "USD"
+          },
+          "taxType": "STATE_SALES_TAX"
+        }
+      ],
+      "ebayCollectAndRemitTaxes": [
+        {
+          "taxType": "STATE_SALES_TAX",
+          "amount": {
+            "value": "24.33",
+            "currency": "USD"
+          },
+          "collectionMethod": "NET"
+        },
+        {
+          "taxType": "ELECTRONIC_RECYCLING_FEE",
+          "amount": {
+            "value": "6.0",
+            "currency": "USD"
+          },
+          "collectionMethod": "NET"
+        }
+      ],
+      "properties": {
+        "buyerProtection": true
+      },
+      "lineItemFulfillmentInstructions": {
+        "minEstimatedDeliveryDate": "2020-05-20T07:00:00.000Z",
+        "maxEstimatedDeliveryDate": "2020-05-20T07:00:00.000Z",
+        "shipByDate": "2020-05-14T06:59:59.000Z",
+        "guaranteedDelivery": false
+      }
+    }
+  ],
+  "ebayCollectAndRemitTax": true,
+  "salesRecordReference": "8**7",
+  "totalFeeBasisAmount": {
+    "value": "294.33",
+    "currency": "USD"
+  }
+}
