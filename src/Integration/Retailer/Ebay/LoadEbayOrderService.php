@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Integration\Retailer\Ebay;
 
+use App\Entity\Enums\OrderStatus;
 use App\Integration\Retailer\LoadCustomerOrderServiceInterface;
 use App\ThirdParty\Ebay\ApiInterface;
 use InvalidArgumentException;
@@ -28,7 +29,7 @@ class LoadEbayOrderService implements LoadCustomerOrderServiceInterface
 
             $orderDetails = [
                 'externalRef' => $order['orderId'],
-                //'status' => Order::LOADED,
+                'status' => OrderStatus::STARTED,
                 'customerName' => $shipTo['fullName'] ?: $buyerDetails['fullName'],
                 'shipping_address_1' => $shippingAddress['addressLine1'] ?: $buyerAddress['addressLine1'],
                 'city' => $shippingAddress['city'] ?: $buyerAddress['city'],

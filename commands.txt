@@ -1,0 +1,2 @@
+//check exported environment variables
+symfony console debug:container --env-vars
