@@ -44,9 +44,17 @@ class EasyPostOrderShipmentCommand extends Command
         $orderRef = $input->getOption('order');
 
         $shipmentInfo = $this->easyPostOrderShipmentService->createShipment($orderRef);
-        $shipment = $this->easyPostOrderShipmentService->buyShipment($shipmentInfo);
+        $shipmentDetails = $this->easyPostOrderShipmentService->buyShipment($shipmentInfo);
 
-        $output->writeln("\nOrder shipped successfully\n");
+        $orderId = $shipmentDetails['orderId'];
+        $shipmentId = $shipmentDetails['shipmentId'];
+        $label = $shipmentDetails['label'];
+
+        $output->writeln("\nOrder $orderId has been shipped successfully. Shipment Id = $shipmentId\n");
+
+        if ($label) {
+            $output->writeln("Label is $label\n");
+        }
 
         return Command::SUCCESS;
     }

@@ -3,6 +3,7 @@
 namespace App\Integration\Shipper\EasyPost;
 
 use App\Entity\Enums\OrderStatus;
+use App\Entity\Shipment;
 use App\Repository\OrderRepository;
 use App\ThirdParty\EasyPost\ApiInterface;
 
@@ -10,7 +11,7 @@ class EasyPostOrderShipmentService implements EasyPostOrderShipmentServiceInterf
 {
     public function __construct(
         private readonly ApiInterface $api,
-        private readonly OrderRepository $orderRepository
+        private readonly OrderRepository $orderRepository,
     ) {
     }
 
@@ -61,14 +62,26 @@ class EasyPostOrderShipmentService implements EasyPostOrderShipmentServiceInterf
             'rate' => ['mode' => 'test', 'id' => $shipmentInfo['rateId'] ]
         ];
 
-        $result = $this->api->buyShipment($buyShipmentPayload, $shipmentInfo['shipmentId']);print_r($result);
+        $result = $this->api->buyShipment($buyShipmentPayload, $shipmentInfo['shipmentId']);
 
-        $order = $this->orderRepository->findBy(['externalRef' => $shipmentInfo['reference']])[0];
+        $order = $this->orderRepository->findBy(['externalRef' => $shipmentInfo['orderRef']])[0];
 
         $order->setStatus(OrderStatus::COMPLETED->value);
 
+        $shipment = new Shipment();
+        $shipment->setShipmentRef($result['shipmentId']);
+        $shipment->setLabelUrl($result['labelUrl']);
+        $shipment->setTrackingCode($result['trackingCode']);
+        $shipment->setOrder($order);
+
+        $order->setShipment($shipment);
+
         $this->orderRepository->save($order, true);
 
-        return [];
+        return [
+            'orderId' => $order->getId(),
+            'shipmentId' => $shipment->getId(),
+            'label' => $shipment->getLabelUrl(),
+        ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -61,10 +62,13 @@ class Order
     #[ORM\OneToMany(targetEntity:"Item", mappedBy: "order", cascade: ["persist"])]
     private $items;
 
+    #[ORM\OneToOne(mappedBy: 'order', cascade: ['persist', 'remove'])]
+    private ?Shipment $shipment = null;
+
     public function __construct()
     {
-        $this->createdAt = new \DateTimeImmutable();
-        $this->modifiedAt = new \DateTimeImmutable();
+        $this->createdAt = new DateTimeImmutable();
+        $this->modifiedAt = new DateTimeImmutable();
         $this->items = new ArrayCollection();
     }
 
@@ -249,6 +253,23 @@ class Order
     public function addItem(Item $item): self
     {
         $this->items[] = $item;
+
+        return $this;
+    }
+
+    public function getShipment(): ?Shipment
+    {
+        return $this->shipment;
+    }
+
+    public function setShipment(Shipment $shipment): self
+    {
+        // set the owning side of the relation if necessary
+        if ($shipment->getOrder() !== $this) {
+            $shipment->setOrder($this);
+        }
+
+        $this->shipment = $shipment;
 
         return $this;
     }

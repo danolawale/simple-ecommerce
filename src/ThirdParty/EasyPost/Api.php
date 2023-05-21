@@ -48,7 +48,7 @@ final class Api implements ApiInterface
             $rate = $this->findCheapestRate($result['rates']);
 
             return [
-                'reference' => $result['reference'],
+                'orderRef' => $result['reference'],
                 ... $rate
             ];
 
