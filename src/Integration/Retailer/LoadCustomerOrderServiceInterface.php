@@ -4,5 +4,5 @@ namespace App\Integration\Retailer;
 
 interface LoadCustomerOrderServiceInterface
 {
-    public function load(): int;
+    public function load(): void;
 }

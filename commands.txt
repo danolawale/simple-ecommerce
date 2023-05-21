@@ -1,2 +1,11 @@
 //check exported environment variables
 symfony console debug:container --env-vars
+
+//doctrine
+symfony console make:migration
+symfony console doctrine:migration:diff
+symfony console doctrine:migrations:list
+symfony console doctrine:migrations:migrate
+
+//run tests
+symfony php bin/phpunit tests/Integration/Retailer/Ebay/LoadEbayOrderServiceTest.php

@@ -5,9 +5,9 @@ namespace App\ThirdParty\Ebay;
 
 use stdClass;
 
-class TestOrder
+class MockResponse
 {
-    public static function testOrder(): string
+    public static function getOrder(): string
     {
         $details = self::orderDetails();
         $address= $details->address;
@@ -201,7 +201,7 @@ JSON;
         $details = [
             [
                 'name' => 'David Hawthorne',
-                'orderId' => "325567",
+                'orderId' => date('ymdHis'),
                 'itemId' => "255764",
                 'itemName' => "Honor 20 Mobile Phone Cover",
                 'price' => 22.55,
@@ -216,7 +216,7 @@ JSON;
             ],
             [
                 'name' => 'Jane Kelly',
-                'orderId' => "744356",
+                'orderId' => date('ymdHis'),
                 'itemId' => "155467",
                 'itemName' => "LG 55 Inch 2020 Television",
                 'price' => 785.80,
@@ -231,7 +231,7 @@ JSON;
             ],
             [
                 'name' => 'Matt Stone',
-                'orderId' => "555783",
+                'orderId' => date('ymdHis'),
                 'itemId' => "322564",
                 'itemName' => "AAA32 Alkaline Power",
                 'price' => 15.99,

@@ -5,7 +5,9 @@ namespace App\Integration\Retailer\Ebay;
 
 use App\Entity\Enums\OrderStatus;
 use App\Integration\Retailer\LoadCustomerOrderServiceInterface;
+use App\Repository\OrderRepository;
 use App\ThirdParty\Ebay\ApiInterface;
+use App\Transformer\OrderItemTransformer;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
@@ -13,31 +15,32 @@ class LoadEbayOrderService implements LoadCustomerOrderServiceInterface
 {
     public function __construct(
         private readonly ApiInterface $api,
+        private readonly OrderRepository $orderRepository
     ) {
     }
 
-    public function load(): int
+    public function load(): void
     {
         try {
-            $order = $this->api->getOrder();
+            $orderData = $this->api->getOrder();
 
-            $buyerDetails = $order['buyer']['buyerRegistrationAddress'];
+            $buyerDetails = $orderData['buyer']['buyerRegistrationAddress'];
             $buyerAddress = $buyerDetails['contactAddress'];
-            $shipTo = $order['fulfillmentStartInstructions'][0]['shippingStep']['shipTo'];
-            $shippingAddress = $order['fulfillmentStartInstructions'][0]['shippingStep']['shipTo']['contactAddress'];
-            $items = $order['lineItems'];
+            $shipTo = $orderData['fulfillmentStartInstructions'][0]['shippingStep']['shipTo'];
+            $shippingAddress = $shipTo['contactAddress'];
+            $items = $orderData['lineItems'];
 
             $orderDetails = [
-                'externalRef' => $order['orderId'],
-                'status' => OrderStatus::STARTED,
+                'externalRef' => $orderData['orderId'],
+                'status' => OrderStatus::STARTED->value,
                 'customerName' => $shipTo['fullName'] ?: $buyerDetails['fullName'],
-                'shipping_address_1' => $shippingAddress['addressLine1'] ?: $buyerAddress['addressLine1'],
+                'shippingAddress1' => $shippingAddress['addressLine1'] ?: $buyerAddress['addressLine1'],
                 'city' => $shippingAddress['city'] ?: $buyerAddress['city'],
                 'postCode' => $shippingAddress['postalCode'] ?: $buyerAddress['postalCode'],
                 'countryCode' => $shippingAddress['countryCode'] ?: $buyerAddress['countryCode'],
                 'email' => $shipTo['email'] ?: $buyerDetails['email'],
-                'price' => $order['pricingSummary']['total']['value'],
-                'currency' => $order['pricingSummary']['total']['currency'],
+                'price' => $orderData['pricingSummary']['total']['value'],
+                'currency' => $orderData['pricingSummary']['total']['currency'],
                 'items' => array_map(function(array $item): array {
                     return [
                         'sku' => $item['lineItemId'],
@@ -48,7 +51,9 @@ class LoadEbayOrderService implements LoadCustomerOrderServiceInterface
                 }, $items)
             ];
 
-            return (int)$order['orderId'];
+            $order = OrderItemTransformer::transform($orderDetails);
+
+            $this->orderRepository->save($order, true);
 
         } catch(InvalidArgumentException $exception) {
             throw new BadRequestException($exception->getMessage());

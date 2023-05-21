@@ -58,7 +58,7 @@ class Order
     #[ORM\Column]
     private ?\DateTimeImmutable $modifiedAt = null;
 
-    #[ORM\OneToMany(targetEntity:"Item", mappedBy: "order")]
+    #[ORM\OneToMany(targetEntity:"Item", mappedBy: "order", cascade: ["persist"])]
     private $items;
 
     public function __construct()
