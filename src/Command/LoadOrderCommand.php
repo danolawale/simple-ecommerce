@@ -41,5 +41,5 @@ class LoadOrderCommand extends Command
 
         return Command::SUCCESS;
     }
-
 }
+#php bin/console app:load:customer:orders -p ebay

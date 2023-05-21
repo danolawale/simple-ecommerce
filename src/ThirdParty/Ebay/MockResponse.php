@@ -103,7 +103,7 @@ class MockResponse
             "city": "$address->city",
             "stateOrProvince": "**",
             "postalCode": "$address->postCode",
-            "countryCode": "UK"
+            "countryCode": "US"
           },
           "primaryPhone": {
             "phoneNumber": "4********0"
@@ -207,11 +207,11 @@ JSON;
                 'price' => 22.55,
                 'email' => 'david.hawthorne@test.com',
                 'address' => [
-                    'address1' => 10,
-                    'address2' => 'Lincoln Street',
-                    'address3' => '',
-                    'city' => 'Manchester',
-                    'postCode' => 'M1 3FG'
+                    'address1' => '4918 NC-704',
+                    'address2' => 'Sandy Ridge',
+                    'address3' => 'NC',
+                    'city' => 'North Carolina',
+                    'postCode' => '27046'
                 ]
             ],
             [
