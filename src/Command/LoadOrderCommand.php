@@ -36,8 +36,8 @@ class LoadOrderCommand extends Command
             return Command::FAILURE;
         }
 
-        ($this->loadOrderFactory)($input->getOption('platform'))->load();
-        $output->writeln("\nOrder loaded successfully\n");
+        $orderRef = ($this->loadOrderFactory)($input->getOption('platform'))->load();
+        $output->writeln("\nOrder $orderRef loaded successfully\n");
 
         return Command::SUCCESS;
     }

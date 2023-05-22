@@ -97,6 +97,8 @@ class LoadEbayOrderServiceTest extends TestCase
                 return true;
             }), $this->equalTo(true));
 
-        (new LoadEbayOrderService($api, $orderRepository))->load();
+        $result = (new LoadEbayOrderService($api, $orderRepository))->load();
+
+        $this->assertEquals('test_ref123', $result);
     }
 }

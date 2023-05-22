@@ -19,7 +19,7 @@ class LoadEbayOrderService implements LoadCustomerOrderServiceInterface
     ) {
     }
 
-    public function load(): void
+    public function load(): string
     {
         try {
             $orderData = $this->api->getOrder();
@@ -54,6 +54,8 @@ class LoadEbayOrderService implements LoadCustomerOrderServiceInterface
             $order = OrderItemTransformer::transform($orderDetails);
 
             $this->orderRepository->save($order, true);
+
+            return $order->getExternalRef();
 
         } catch(InvalidArgumentException $exception) {
             throw new BadRequestException($exception->getMessage());

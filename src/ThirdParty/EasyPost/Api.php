@@ -8,7 +8,7 @@ use Webmozart\Assert\Assert;
 use Webmozart\Assert\InvalidArgumentException;
 
 final class Api implements ApiInterface
-{
+{#https://www.easypost.com/docs/api#shipments
     private const BASE_URL = 'https://api.easypost.com/v2';
 
     public function __construct(

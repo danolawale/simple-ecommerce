@@ -222,11 +222,11 @@ JSON;
                 'price' => 785.80,
                 'email' => 'jane.kelly@test.com',
                 'address' => [
-                    'address1' => '25 Kail Avenue',
-                    'address2' => 'Morton Lane',
-                    'address3' => '',
-                    'city' => 'Leeds',
-                    'postCode' => 'L23 7BB'
+                    'address1' => '8323 Linville Rd',
+                    'address2' => 'Oak Ridge',
+                    'address3' => 'NC',
+                    'city' => 'North Carolina',
+                    'postCode' => '27310'
                 ]
             ],
             [
@@ -237,11 +237,11 @@ JSON;
                 'price' => 15.99,
                 'email' => 'matt.stone@test.com',
                 'address' => [
-                    'address1' => 28,
-                    'address2' => 'Pelican House',
-                    'address3' => 'Major Street',
-                    'city' => 'Bradford',
-                    'postCode' => 'B8 8FR'
+                    'address1' => '5161 NC-211',
+                    'address2' => 'West End',
+                    'address3' => 'NC',
+                    'city' => 'North Carolina',
+                    'postCode' => '27376'
                 ]
             ],
         ];

@@ -3,12 +3,8 @@ declare(strict_types=1);
 
 namespace App\Command\Shipper;
 
-use App\Integration\Retailer\LoadCustomerOrderServiceInterface;
-use App\Integration\Retailer\LoadOrderFactory;
 use App\Integration\Shipper\EasyPost\EasyPostOrderShipmentServiceInterface;
 use App\Integration\Shipper\ShipOrderFactory;
-use App\Repository\OrderRepository;
-use App\ThirdParty\EasyPost\ApiInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
