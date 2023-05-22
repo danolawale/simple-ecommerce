@@ -10,14 +10,13 @@ final class AppFixturesFactory
     {
         $fixture = method_exists($entityName, 'getFixturesHandler') ? $entityName::getFixturesHandler() : null;
 
-        if(null === $fixture)
-        {
+        if (null === $fixture) {
             $fixture = new GenericEntityFixtures();
             $fixture->setEntityName($entityName);
 
             return $fixture;
         }
 
-        return new $fixture;
+        return new $fixture();
     }
 }

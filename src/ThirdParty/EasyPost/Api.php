@@ -8,7 +8,8 @@ use Webmozart\Assert\Assert;
 use Webmozart\Assert\InvalidArgumentException;
 
 final class Api implements ApiInterface
-{#https://www.easypost.com/docs/api#shipments
+{
+#https://www.easypost.com/docs/api#shipments
     private const BASE_URL = 'https://api.easypost.com/v2';
 
     public function __construct(
@@ -51,8 +52,7 @@ final class Api implements ApiInterface
                 'orderRef' => $result['reference'],
                 ... $rate
             ];
-
-        } catch(InvalidArgumentException $exception) {
+        } catch (InvalidArgumentException $exception) {
             throw new BadRequestHttpException($exception->getMessage());
         }
     }
@@ -92,8 +92,7 @@ final class Api implements ApiInterface
                 'trackingCode' => $result['tracking_code'],
                 'labelUrl' => $result['postage_label']['label_url']
             ];
-
-        } catch(InvalidArgumentException $exception) {
+        } catch (InvalidArgumentException $exception) {
             throw new BadRequestHttpException($exception->getMessage());
         }
     }

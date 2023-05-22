@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Integration\Retailer;
@@ -16,7 +17,7 @@ class LoadOrderFactory
 
     public function __invoke(string $platform)
     {
-        return match($platform) {
+        return match ($platform) {
             'ebay' => new LoadEbayOrderService(new EbayApi(), $this->orderRepository),
             default => throw new InvalidArgumentException("Please specify a valid platform")
         };

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Command\Shipper;
@@ -24,9 +25,7 @@ class EasyPostOrderShipmentCommand extends Command
     {
         $this
             ->setHelp('To run on the terminal: php bin/console app:ship:easypost:order -o {order-ref}')
-            ->setDescription(
-                'This command helps ship orders on easypost.'
-            )
+            ->setDescription('This command helps ship orders on easypost.')
             ->addOption('order', 'o', InputOption::VALUE_REQUIRED);
     }
 
@@ -38,16 +37,12 @@ class EasyPostOrderShipmentCommand extends Command
         }
 
         $orderRef = $input->getOption('order');
-
         $shipmentInfo = $this->easyPostOrderShipmentService->createShipment($orderRef);
         $shipmentDetails = $this->easyPostOrderShipmentService->buyShipment($shipmentInfo);
-
         $orderId = $shipmentDetails['orderId'];
         $shipmentId = $shipmentDetails['shipmentId'];
         $label = $shipmentDetails['label'];
-
         $output->writeln("\nOrder $orderId has been shipped successfully. Shipment Id = $shipmentId\n");
-
         if ($label) {
             $output->writeln("Label is $label\n");
         }

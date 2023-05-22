@@ -8,21 +8,21 @@ use App\Entity\Utility\EntityMappingHandler;
 
 class GenericEntityFixtures extends Fixture implements EntityFixturesInterface
 {
-   protected array $data;
-   private string $entityName;
+    protected array $data;
+    private string $entityName;
 
-   private StandardEntityFixturesProcessor $standardEntityFixturesProcessor;
+    private StandardEntityFixturesProcessor $standardEntityFixturesProcessor;
 
-   public function __construct()
-   {
-       $this->standardEntityFixturesProcessor 
-        = new StandardEntityFixturesProcessor(new EntityMappingHandler);
-   }
+    public function __construct()
+    {
+        $this->standardEntityFixturesProcessor
+        = new StandardEntityFixturesProcessor(new EntityMappingHandler());
+    }
 
-   public function setEntityName(string $entityName): void
-   {
-       $this->entityName = $entityName;
-   }
+    public function setEntityName(string $entityName): void
+    {
+        $this->entityName = $entityName;
+    }
 
     public function load(ObjectManager $manager): void
     {

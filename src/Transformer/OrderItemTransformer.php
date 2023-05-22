@@ -12,9 +12,9 @@ class OrderItemTransformer
         $items = $orderDetails['items'];
         unset($orderDetails['items']);
 
-        $order = new Order;
+        $order = new Order();
         foreach ($orderDetails as $field => $value) {
-            $setMethod = "set".ucfirst($field);
+            $setMethod = "set" . ucfirst($field);
 
             $order->$setMethod($value);
         }
@@ -30,6 +30,5 @@ class OrderItemTransformer
         }
 
         return $order;
-
     }
 }

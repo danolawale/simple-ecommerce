@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Command;
@@ -23,9 +24,7 @@ class LoadOrderCommand extends Command
     {
         $this
             ->setHelp('To run on the terminal: php bin/console app:load:customer:orders')
-            ->setDescription(
-                'This command helps to load and store orders from retailers such as ebay, etsy, etc'
-            )
+            ->setDescription('This command helps to load and store orders from retailers such as ebay, etsy, etc')
             ->addOption('platform', 'p', InputOption::VALUE_REQUIRED);
     }
 
@@ -38,7 +37,6 @@ class LoadOrderCommand extends Command
 
         $orderRef = ($this->loadOrderFactory)($input->getOption('platform'))->load();
         $output->writeln("\nOrder $orderRef loaded successfully\n");
-
         return Command::SUCCESS;
     }
 }

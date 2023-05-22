@@ -15,3 +15,12 @@ symfony php bin/phpunit tests/Integration/Shipper/EasyPostOrderShipmentServiceTe
 symfony php bin/phpunit tests/Entity/ItemTest.php
 symfony php bin/phpunit tests/Entity/OrderTest.php
 symfony php bin/phpunit tests/Entity/ShipmentTest.php
+
+//static analysis tools
+composer require "squizlabs/php_codesniffer=*" --dev
+./vendor/bin/phpcs --standard=PSR12 src
+./vendor/bin/phpcbf --standard=PSR12 src
+
+composer require vimeo/psalm --dev
+./vendor/bin/psalm
+./vendor/bin/psalm --show-info=true

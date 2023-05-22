@@ -15,7 +15,6 @@ final class StandardEntityFixturesProcessor
 
     public function __construct(private EntityMappingHandler $entityMappingHandler)
     {
-        
     }
 
     public function load(ObjectManager $manager, array $dataset, string $entityName): void
@@ -23,28 +22,25 @@ final class StandardEntityFixturesProcessor
         $this->entityManager = $manager;
 
         $metadata = $manager->getClassMetadata($entityName);
-        
+
         $mappedAssociation = $metadata->associationMappings;
 
         $this->entityMappingHandler->setMappedAssociation($mappedAssociation);
 
         $foreignData = $this->entityMappingHandler->getForeignKeysData();
 
-        foreach($dataset as $datum)
-        {
+        foreach ($dataset as $datum) {
             $entity = new $entityName();
 
-            foreach($datum as $key => $value)
-            {
+            foreach ($datum as $key => $value) {
                 $fieldName = $this->getFieldName($metadata, $foreignData, $key);
                 $fieldValue = $this->getFieldValue($foreignData, $key, $value);
-              
-                $methodName = "set". $this->getMethodName($fieldName);
 
-                if(method_exists($entityName, $methodName))
-                {
+                $methodName = "set" . $this->getMethodName($fieldName);
+
+                if (method_exists($entityName, $methodName)) {
                     $entity->$methodName($fieldValue);
-                } 
+                }
             }
 
             $manager->persist($entity);
@@ -57,28 +53,22 @@ final class StandardEntityFixturesProcessor
 
     private function getFieldName(ClassMetadata $metadata, array $foreignData, string $fieldName): string
     {
-        if($fieldName = $metadata->getFieldName($fieldName))
-        {
-            return ($foreignData[$fieldName] ?? null) 
-                ? $foreignData[$fieldName]['fieldName'] 
+        if ($fieldName = $metadata->getFieldName($fieldName)) {
+            return ($foreignData[$fieldName] ?? null)
+                ? $foreignData[$fieldName]['fieldName']
                 : $fieldName;
-        }
-        else
-        {
+        } else {
             throw new \Exception("Field {$fieldName} does not exist in {$metadata->name}");
         }
     }
 
     private function getFieldValue(array $foreignData, string $fieldName, $fieldValue = null)
     {
-        if(($foreignData[$fieldName] ?? null) && null !== $fieldValue)
-        {
+        if (($foreignData[$fieldName] ?? null) && null !== $fieldValue) {
             $source = $foreignData[$fieldName]['source'];
 
             return $this->entityManager->getRepository($source)->find($fieldValue);
-        }
-        else
-        {
+        } else {
             return $fieldValue;
         }
     }

@@ -15,14 +15,12 @@ final class EntityMappingHandler
     {
         $foreignKeysMetadata = [];
 
-        foreach($this->mappedAssociationData as $key => $data)
-        {
+        foreach ($this->mappedAssociationData as $key => $data) {
             $targetEntity = $data['targetEntity'];
 
             $foreignData = $data['joinColumns'] ?? [];
 
-            foreach($foreignData as $properties)
-            {
+            foreach ($foreignData as $properties) {
                 $foreignKey = $properties['name'];
 
                 $foreignKeysMetadata[$foreignKey] = [

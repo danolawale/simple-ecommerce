@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\ThirdParty\Ebay;
@@ -10,8 +11,7 @@ class MockResponse
     public static function getOrder(): string
     {
         $details = self::orderDetails();
-        $address= $details->address;
-
+        $address = $details->address;
         return <<<JSON
 {
   "orderId": "$details->orderId",
@@ -193,7 +193,6 @@ class MockResponse
   }
 }
 JSON;
-
     }
 
     private static function orderDetails(): stdClass
@@ -245,9 +244,7 @@ JSON;
                 ]
             ],
         ];
-
         $details = $details[array_rand($details)];
-
         return json_decode(json_encode($details));
     }
 }

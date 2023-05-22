@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Integration\Retailer\Ebay;
@@ -23,13 +24,11 @@ class LoadEbayOrderService implements LoadCustomerOrderServiceInterface
     {
         try {
             $orderData = $this->api->getOrder();
-
             $buyerDetails = $orderData['buyer']['buyerRegistrationAddress'];
             $buyerAddress = $buyerDetails['contactAddress'];
             $shipTo = $orderData['fulfillmentStartInstructions'][0]['shippingStep']['shipTo'];
             $shippingAddress = $shipTo['contactAddress'];
             $items = $orderData['lineItems'];
-
             $orderDetails = [
                 'externalRef' => $orderData['orderId'],
                 'status' => OrderStatus::STARTED->value,
@@ -41,7 +40,8 @@ class LoadEbayOrderService implements LoadCustomerOrderServiceInterface
                 'email' => $shipTo['email'] ?: $buyerDetails['email'],
                 'price' => $orderData['pricingSummary']['total']['value'],
                 'currency' => $orderData['pricingSummary']['total']['currency'],
-                'items' => array_map(function(array $item): array {
+                'items' => array_map(function (array $item): array {
+
                     return [
                         'sku' => $item['lineItemId'],
                         'description' => $item['title'],
@@ -50,16 +50,11 @@ class LoadEbayOrderService implements LoadCustomerOrderServiceInterface
                     ];
                 }, $items)
             ];
-
             $order = OrderItemTransformer::transform($orderDetails);
-
             $this->orderRepository->save($order, true);
-
             return $order->getExternalRef();
-
-        } catch(InvalidArgumentException $exception) {
+        } catch (InvalidArgumentException $exception) {
             throw new BadRequestException($exception->getMessage());
         }
-
     }
 }
