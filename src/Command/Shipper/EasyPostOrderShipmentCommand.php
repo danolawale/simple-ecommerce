@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace App\Command\Shipper;
 
 use App\Integration\Shipper\EasyPost\EasyPostOrderShipmentServiceInterface;
-use App\Integration\Shipper\ShipOrderFactory;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 #[AsCommand('app:ship:easypost:order')]
 class EasyPostOrderShipmentCommand extends Command
@@ -37,17 +38,23 @@ class EasyPostOrderShipmentCommand extends Command
         }
 
         $orderRef = $input->getOption('order');
-        $shipmentInfo = $this->easyPostOrderShipmentService->createShipment($orderRef);
-        $shipmentDetails = $this->easyPostOrderShipmentService->buyShipment($shipmentInfo);
-        $orderId = $shipmentDetails['orderId'];
-        $shipmentId = $shipmentDetails['shipmentId'];
-        $label = $shipmentDetails['label'];
-        $output->writeln("\nOrder $orderId has been shipped successfully. Shipment Id = $shipmentId\n");
-        if ($label) {
-            $output->writeln("Label is $label\n");
+
+        try {
+            $shipmentInfo = $this->easyPostOrderShipmentService->createShipment($orderRef);
+            $shipmentDetails = $this->easyPostOrderShipmentService->buyShipment($shipmentInfo);
+            $orderId = $shipmentDetails['orderId'];
+            $shipmentId = $shipmentDetails['shipmentId'];
+            $label = $shipmentDetails['label'];
+            $output->writeln("\nOrder $orderId has been shipped successfully. Shipment Id = $shipmentId\n");
+            if ($label) {
+                $output->writeln("Label is $label\n");
+            }
+
+            return Command::SUCCESS;
+        } catch (NotFoundHttpException $exception) {
+            throw new BadRequestHttpException($exception->getMessage());
         }
 
-        return Command::SUCCESS;
     }
 }
 #744356

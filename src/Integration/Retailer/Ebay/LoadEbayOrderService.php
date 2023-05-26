@@ -24,10 +24,12 @@ class LoadEbayOrderService implements LoadCustomerOrderServiceInterface
     {
         try {
             $orderData = $this->api->getOrder();
+
             $buyerDetails = $orderData['buyer']['buyerRegistrationAddress'];
             $buyerAddress = $buyerDetails['contactAddress'];
             $shipTo = $orderData['fulfillmentStartInstructions'][0]['shippingStep']['shipTo'];
             $shippingAddress = $shipTo['contactAddress'];
+
             $items = $orderData['lineItems'];
             $orderDetails = [
                 'externalRef' => $orderData['orderId'],
@@ -50,8 +52,11 @@ class LoadEbayOrderService implements LoadCustomerOrderServiceInterface
                     ];
                 }, $items)
             ];
+
             $order = OrderItemTransformer::transform($orderDetails);
+
             $this->orderRepository->save($order, true);
+
             return $order->getExternalRef();
         } catch (InvalidArgumentException $exception) {
             throw new BadRequestException($exception->getMessage());

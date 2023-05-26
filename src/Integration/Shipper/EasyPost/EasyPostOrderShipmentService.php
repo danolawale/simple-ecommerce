@@ -4,6 +4,7 @@ namespace App\Integration\Shipper\EasyPost;
 
 use App\Entity\Enums\OrderStatus;
 use App\Entity\Shipment;
+use App\Exception\OrderNotFoundException;
 use App\Repository\OrderRepository;
 use App\ThirdParty\EasyPost\ApiInterface;
 
@@ -17,7 +18,11 @@ class EasyPostOrderShipmentService implements EasyPostOrderShipmentServiceInterf
 
     public function createShipment(string $orderRef): array
     {
-        $order = $this->orderRepository->findBy(['externalRef' => $orderRef])[0];
+        $order = $this->orderRepository->findBy(['externalRef' => $orderRef])[0] ?? null;
+
+        if ($order === null) {
+            throw OrderNotFoundException::withRef($orderRef);
+        }
 
         $shipmentDetails = [
             'shipment' => [
